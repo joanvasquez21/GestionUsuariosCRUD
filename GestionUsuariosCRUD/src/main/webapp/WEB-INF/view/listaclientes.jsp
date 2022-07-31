@@ -16,12 +16,30 @@
 		<th>Nombre</th>
  		<th>Apellido</th> 
 		<th>Email</th>
+		<th>Modificar</th>
+		<th>Eliminar</th>
 	</tr>
 	<c:forEach var="clienteVar" items="${clientes}">
+	<!-- Boton para actualizar -->
+		<c:url var="linkActualizar" value="/cliente/formularioActualizar">
+			<c:param name="idCliente" value="${clienteVar.id}"/>
+		</c:url>
+	
+	<!-- Boton para eliminar -->
+		<c:url var="linkEliminar" value="/cliente/eliminar">
+			<c:param name="idCliente" value="${clienteVar.id}"/>
+		</c:url>
+		
 		<tr>
 			<td>${clienteVar.nombre}</td>
 			<td>${clienteVar.apellido}</td>
 			<td>${clienteVar.email}</td>
+			
+			<!-- Celda de agregar un boton -->
+			<td><a href="${linkActualizar}"><input type="button" value="Modificar"/></a></td>
+			<td><a href="${linkEliminar}"><input type="button" value="Eliminar" 
+			onclick="if(!(confirm('Eliminaras un registro. ¿Estas segur@?'))) return false"/></a></td>
+			
 		</tr>
 	</c:forEach>
 </table>

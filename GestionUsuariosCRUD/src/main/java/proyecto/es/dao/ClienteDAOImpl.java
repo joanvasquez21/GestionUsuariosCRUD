@@ -32,8 +32,33 @@ public class ClienteDAOImpl implements ClienteDAO {
 		// Aqui se construira lo necesario para ingresar registros
 		Session miSession = sessionFactory.getCurrentSession();
 
-		miSession.save(elCliente);
+		miSession.saveOrUpdate(elCliente);
 
+	}
+
+	@Override
+	@Transactional
+	public Cliente getCliente(int id) { 
+		// Obtener la session
+		Session miSession = sessionFactory.getCurrentSession();
+		// Obtener la informacion del cliente seleccionado
+		Cliente elCliente = miSession.get(Cliente.class, id);
+		
+		return elCliente;
+	}
+
+	@Override
+	@Transactional
+	public void eliminarCliente(int id) {
+		// Obtener la session
+		Session miSession = sessionFactory.getCurrentSession();
+		//Borrar el cliente de la base de datos, utilizando como criterio su ID correspondiente
+		Query consulta = miSession.createQuery("delete from Cliente where id=: idCliente");
+		
+		consulta.setParameter("idCliente", id);
+		
+		consulta.executeUpdate();
+		
 	}
 
 }
